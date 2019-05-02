@@ -1,13 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Resource from 'vue-resource'
-// import HelloWorld from '@/components/HelloWorld'
 import Goods from '@/components/goods/goods.vue'
 import Ratings from '@/components/ratings/ratings'
 import Seller from '@/components/seller/seller.vue'
 
 Vue.use(Router)
-Vue.use(Resource)
 
 // 1. 定义 (路由) 组件。可以从其他文件 import 进来
 // const Goods = { template:'<div>商品</div>'}

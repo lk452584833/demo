@@ -86,8 +86,8 @@
 		},
 		created() {
 			this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
-			this.$http.get('/api/goods').then((response) => {
-				response = response.body
+			this.axios.get('/api/goods').then((response) => {
+				response = response.data
 				if (response.errno === ERROR_OK) {
 					this.goods = response.data
 					this.$nextTick(function() { // dom更新之后 触发

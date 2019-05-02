@@ -11,7 +11,6 @@
 	<keep-alive>
 		<router-view :seller="seller"></router-view>
 	</keep-alive>
-	<div class="footer"></div>
   </div>
 </template>
 
@@ -36,8 +35,8 @@
 		},
 		created() {
 			// mock 模拟数据
-			this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
-				response = response.body
+			this.axios.get('/api/seller?id=' + this.seller.id).then((response) => {
+				response = response.data
 				if (response.errno === ERROR_OK) {
 					this.seller = Object.assign({}, this.seller, response.data)
 				}

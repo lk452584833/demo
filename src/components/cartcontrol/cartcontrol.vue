@@ -19,19 +19,20 @@
 			}
 		},
 		methods: {
-			addCart(event) {
+			decreaseCart() {
+				if (!this.food.count) {
+					return false
+				} else {
+					this.food.count--
+				}
+			},
+			addCart() {
 				if (!this.food.count) {
 					Vue.set(this.food, 'count', 1)
 				} else {
 					this.food.count++
 				}
-				// 添加的时候 派发cart-add事件,传递当前元素,实现非父子组件通讯
 				this.$root.eventHub.$emit('cart-add', event.target)
-			},
-			decreaseCart() {
-				if (this.food.count) {
-					this.food.count--
-				}
 			}
 		}
 	}
