@@ -1,7 +1,7 @@
 var state = {
 	name: 'Tom',
 	starLen: 5, // 控制多少颗星星数
-	star: 3.6
+	star: 4.6
 }
 var getters = {
 	getSellerStarLen() {
