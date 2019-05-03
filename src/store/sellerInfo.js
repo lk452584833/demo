@@ -1,6 +1,6 @@
 var state = {
 	name: 'Tom',
-	starLen: 5, // 控制多少颗星星数
+	starLen: 5,
 	star: 4.6
 }
 var getters = {
