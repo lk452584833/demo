@@ -33,9 +33,13 @@
 			<div class="detail" v-show="detailShow" >
 				<div class="detail-wrapper clearfix">
 					<div class="detail-main">
-						<h1 class="name">{{seller.name}}</h1>
+						<h1 class="name">{{seller.name}} {{GetSellerStar}}分</h1>
+						<div class="setstar">
+							评分: <input type="text" :placeholder="GetSellerStar" ref="updateage" class="starnum">
+							<span @click="updateAge" class="btn">提交</span>
+						</div>
 						<div class="star-wrapper">
-							<star :size="48" :score="seller.score"></star>
+							<star :size="48" :score="GetSellerStar"></star>
 						</div>
 						<fline>优化信息</fline>
 						<ul v-if="seller.supports" class="supports">
@@ -57,6 +61,7 @@
 </template>
 
 <script>
+	import {mapState, mapGetters, mapActions} from 'vuex'
 	import star from '../../components/star/star'
 	import fline from '../../components/line/line'
 	import icon from '../../components/icon/icon'
@@ -71,7 +76,36 @@
 				detailShow: false
 			}
 		},
+		computed: {
+			...mapState({ // 直接获取属性
+				GetSellerStar: state => state.sellerInfo.star
+			}),
+			...mapGetters('sellerInfo', { // 通过sellerInfo下getters里面的返回方法获取属性
+				GetSellerName: 'getSellerName', // sellerInfo 映射
+				GetSellerStarLen: 'getSellerStarLen'
+				// GetSellerStar: 'getSellerStar'
+			})
+		},
 		methods: {
+			...mapActions('sellerInfo', [ // 调用sellerInfo 中的actions 中的setAge
+				'setStar' // 注册方法
+			]),
+			updateAge() { // 处理逻辑层
+				const star = this.$refs.updateage.value
+				if (star) {
+					if (star >= 0 && star <= this.GetSellerStarLen) {
+						this.setStar(Number(Number(star).toFixed(1)))
+						this.$nextTick(() => {
+							this.$refs.updateage.value = this.GetSellerStar
+						})
+					} else {
+						const words = `请输入0~${this.GetSellerStarLen}之间的评分`
+						this.$_showBackMsg(words)
+					}
+				} else {
+					this.$_showBackMsg('请输入评分再提交')
+				}
+			},
 			showDetail() {
 				this.detailShow = true
 			},
@@ -140,6 +174,11 @@
 					.name{line-height: 16px;text-align: center;font-size: 16px;font-weight: 700;}
 					.star-wrapper{
 						margin-top: 18px;padding:2px 0;text-align: center;
+					}
+					.setstar{
+						margin: 10px ;text-align: center; font-size: 12px; line-height: 16px;
+						.starnum{width:10%;line-height: 16px;height:16px;vertical-align: top;border-radius: 2px;text-indent: 5px;}
+						.btn{padding:0 3px; background: #f3f5f7;border-radius: 2px;color:rgb(7,17,27) }
 					}
 					.title{
 						display:flex;width:80%;margin:28px auto 40px auto;

@@ -18,3 +18,23 @@ export function urlParam() {
 	}
 	return obj
 }
+
+/* 返回错误信息弹出，需配合reset.css */
+function showBackMsg(data) {
+	var $body = document.body
+	var $div = document.createElement('div')
+	$div.innerText = data
+	$div.className = 'errorMsg'
+	$body.appendChild($div)
+	var $errorMsg = document.getElementsByClassName('errorMsg')
+	if ($errorMsg) {
+		setTimeout(function() {
+			$errorMsg[0].parentNode.removeChild($errorMsg[0])
+		}, 1500)
+	}
+}
+export default{
+	install(Vue, options) {
+		Vue.prototype.$_showBackMsg = showBackMsg
+	}
+}

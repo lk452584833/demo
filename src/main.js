@@ -6,10 +6,12 @@ import router from './router/index.js'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import FastClick from 'fastclick'
-// 引入自定义svg生成的小图标
-import './common/css/icon.css'
+import store from './store'
+import utils from './common/js/utils.js' // 引入自定义工具类
+import './common/css/icon.css' // 引入自定义svg生成的小图标
 // 引入mock模拟数据
 require('./mock')
+Vue.use(utils)
 Vue.use(VueAxios, axios)
 FastClick.attach(document.body)
 Vue.config.productionTip = false
@@ -17,7 +19,8 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
+  router: router,
+  store: store,
   data: {
 	eventHub: new Vue()
   },
@@ -30,6 +33,6 @@ new Vue({
 	},
 	created() {
 		// 初始化路由
-		// this.$router.push({path: '/goods'})
+		this.$router.push({path: '/goods'})
 	}
 })

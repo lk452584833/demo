@@ -5,7 +5,8 @@
 </template>
 
 <script>
-	const LENTH = 5
+	import {mapState} from 'vuex'
+	const LEGTH = 5 // 默认5颗星
 	const CLS_ON = 'on'
 	const CLS_HALF = 'half'
 	const CLS_OFF = 'off'
@@ -18,7 +19,15 @@
 				type: Number
 			}
 		},
+		data() {
+			return {
+				starlen: LEGTH
+			}
+		},
 		computed: {
+			...mapState({ // 获取selelrInfo 里面的starLen
+				GetSellerStarLen: state => state.sellerInfo.starLen
+			}),
 			starType() {
 				return 'star-' + this.size
 			},
@@ -33,17 +42,19 @@
 				if (hasDecimal) {
 					result.push(CLS_HALF)
 				}
-				while (result.length < LENTH) {
+				while (result.length < this.starlen) {
 					result.push(CLS_OFF)
 				}
 				return result
 			}
+		},
+		created() {
+			this.starlen = this.GetSellerStarLen
 		}
 	}
 </script>
 
 <style lang="less">
-	// @import "../../common/css/index.less";
 	.star{
 		font-size: 0;
 		.star-item{
